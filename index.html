@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kendall Exclusive - Coming Soon</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background: #000000;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .background {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(45deg, #000000, #1a1a1a);
+            z-index: -2;
+        }
+
+        .grid {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                linear-gradient(rgba(50, 50, 50, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(50, 50, 50, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-50px, -50px); }
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+            filter: blur(1px);
+        }
+
+        .glow {
+            position: absolute;
+            width: 100%;
+            max-width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(40, 40, 40, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: rotate 10s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            50% { opacity: 1; }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .main-container {
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            text-align: center;
+            animation: fadeInUp 1.5s ease-out;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+            padding: 1rem;
+        }
+
+        .title {
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #808080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s infinite linear;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 800;
+            position: relative;
+        }
+
+        .title::before {
+            content: 'KENDALL EXCLUSIVE';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 45%, rgba(255, 255, 255, 0.5) 50%, transparent 55%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 100%;
+            animation: shine 3s infinite linear;
+        }
+
+        @keyframes shine {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .store-text {
+            font-size: clamp(1rem, 4vw, 2rem);
+            color: #a0a0a0;
+            margin: 1rem 0;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            animation: fadeIn 2s infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coming-soon {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: bold;
+            margin: 3rem 0;
+            color: #ffffff;
+            animation: pulse 2s infinite;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .line {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #404040, transparent);
+            margin: 2rem auto;
+            position: relative;
+            animation: expandLine 2s infinite alternate;
+        }
+
+        .line::before, .line::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #404040;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: glow 1s infinite alternate;
+        }
+
+        .line::before { left: 0; }
+        .line::after { right: 0; }
+
+        @keyframes glow {
+            to { box-shadow: 0 0 10px #404040; }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes expandLine {
+            from { width: 100px; }
+            to { width: min(200px, 50vw); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+
+        .hover-effect {
+            transition: all 0.3s ease;
+        }
+
+        .hover-effect:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .store-text {
+                letter-spacing: 4px;
+            }
+            
+            .content {
+                padding: 2rem;
+            }
+            
+            .line {
+                width: 60px;
+            }
+            
+            @keyframes expandLine {
+                from { width: 60px; }
+                to { width: 120px; }
+            }
+        }
+
+        /* Ensure content is centered on very tall screens */
+        @media (min-height: 1000px) {
+            .main-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        /* Reduce animations on devices that prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .particle, .glow, .grid {
+                animation: none;
+            }
+            
+            .content {
+                animation: fadeIn 0.5s ease-out;
+            }
+            
+            .line, .coming-soon, .store-text {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="grid"></div>
+    <div class="particles"></div>
+    <div class="glow"></div>
+    
+    <div class="main-container container-fluid">
+        <div class="row min-vh-100 align-items-center justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="content">
+                    <h1 class="title hover-effect">Kendall Exclusive</h1>
+                    <div class="line"></div>
+                    <div class="store-text hover-effect">Online Store</div>
+                    <div class="coming-soon hover-effect">COMING SOON</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Create floating particles
+        const particlesContainer = document.querySelector('.particles');
+        const createParticles = () => {
+            particlesContainer.innerHTML = ''; // Clear existing particles
+            const particleCount = window.innerWidth < 768 ? 25 : 50; // Reduce particles on mobile
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.opacity = Math.random();
+                particlesContainer.appendChild(particle);
+            }
+        };
+
+        // Initial creation
+        createParticles();
+
+        // Recreate particles on resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(createParticles, 250);
+        });
+
+        // 3D tilt effect - only on non-touch devices
+        if (window.matchMedia('(hover: hover)').matches) {
+            const content = document.querySelector('.content');
+            document.addEventListener('mousemove', (e) => {
+                const x = (window.innerWidth / 2 - e.pageX) / 50;
+                const y = (window.innerHeight / 2 - e.pageY) / 50;
+                content.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            });
+        }
+    </script>
+</body>
+</html>
