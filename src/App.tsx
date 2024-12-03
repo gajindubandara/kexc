@@ -30,7 +30,7 @@ const App: React.FC = () => {
       const startTime = Date.now(); // Start time to calculate elapsed time
       try {
         const response = await fetch(
-            'https://script.google.com/macros/s/AKfycbyBvIXBKYHWJuQy1jrP02JYMlkUjU-RYAyLagpcghhNcZCJ46BDzCvtHNuZ_tvzizEN/exec' // Replace with your API URL
+            'https://script.google.com/macros/s/AKfycbyrZ-w6FDvVv7g5CUof8qI_wpJmagaO23A_HRj-qY13QB8qRCZQkOq1zlZlEthP8w_3/exec' // Replace with your API URL
         );
         if (!response.ok) {
           throw new Error('Failed to fetch products');

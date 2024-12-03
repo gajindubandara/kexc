@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { Modal, Row, Col, Typography, Badge, Button, Space, Tag, Radio, Alert, Tooltip, message } from 'antd';
-import { ShoppingCartOutlined, StarFilled, TagOutlined } from '@ant-design/icons';
-import { useCart } from "../cart/CartContext";
-import { Product } from "../../types/ProductInterfaces"; // Import your Product interface
+import {Modal, Row, Col, Typography, Badge, Button, Space, Tag, Radio, Alert, Tooltip, message} from 'antd';
+import {ShoppingCartOutlined, StarFilled, TagOutlined} from '@ant-design/icons';
+import {useCart} from "../cart/CartContext";
+import {Product} from "../../types/ProductInterfaces"; // Import your Product interface
 
-const { Title, Text, Paragraph } = Typography;
+const {Title, Text, Paragraph} = Typography;
 
 interface ProductDetailsPopupProps {
     product: Product;
@@ -24,11 +24,11 @@ const COLOR_MAP: { [key: string]: string } = {
     'Purple': '#9b59b6'
 };
 
-const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({ product, visible, onClose }) => {
+const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visible, onClose}) => {
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
     const [selectedColor, setSelectedColor] = useState<string | null>(null);
     const [selectedSizes, setSelectedSizes] = useState<any>({});
-    const { addItem } = useCart();
+    const {addItem} = useCart();
 
     useEffect(() => {
         // Set initial selected color and size
@@ -44,23 +44,6 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({ product, visi
         selectedSize: selectedSize,
         selectedColor: selectedColor
     };
-
-    // Mapping colors
-    // const availableColors = product.color.split(', ');
-    //
-    // // Sizes data
-    // const sizes = [
-    //     { label: 'S', stock: product.sizeS },
-    //     { label: 'M', stock: product.sizeM },
-    //     { label: 'L', stock: product.sizeL },
-    //     { label: 'XL', stock: product.sizeXl }
-    // ];
-
-    // const cartItem = {
-    //     productId: product.productId,
-    //     productName: product.productName,
-    //     price: product.price
-    // };
 
     const handleAddToCart = () => {
         const finalSize = selectedSize || 'none';
@@ -109,7 +92,7 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({ product, visi
                 <Button
                     key="submit"
                     type="primary"
-                    icon={<ShoppingCartOutlined />}
+                    icon={<ShoppingCartOutlined/>}
                     onClick={handleAddToCart}
                     disabled={!selectedSize || !selectedColor}
                 >
@@ -143,10 +126,10 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({ product, visi
 
                 {/* Product Details Column */}
                 <Col xs={24} sm={24} md={14}>
-                    <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+                    <Space direction="vertical" size="middle" style={{width: '100%'}}>
                         {/* Product Name and Category */}
                         <div>
-                            <Title level={3} style={{ marginBottom: 0 }}>
+                            <Title level={3} style={{marginBottom: 0}}>
                                 {product.productName}
                             </Title>
                             <Text type="secondary">{product.category}</Text>
@@ -155,7 +138,7 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({ product, visi
                         {/* Pricing */}
                         <div>
                             <Space>
-                                <Title level={4} type="danger" style={{ marginBottom: 0 }}>
+                                <Title level={4} type="danger" style={{marginBottom: 0}}>
                                     {new Intl.NumberFormat("en-LK", {
                                         style: "currency",
                                         currency: "LKR"
@@ -178,74 +161,102 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({ product, visi
                         {/* Description */}
                         <Paragraph>{product.description}</Paragraph>
 
-                        {/* Color Selection */}
-                        <div>
-                            <Text strong>Color: </Text>
-                            <Space>
-                                {product.details.map((detail) => (
-                                    <Tooltip title={detail.color} key={detail.color}>
-                                        <Button
-                                            shape="circle"
-                                            style={{
-                                                backgroundColor: COLOR_MAP[detail.color] || detail.color,
-                                                border: selectedColor === detail.color
-                                                    ? '3px solid #1890ff'
-                                                    : '1px solid #d9d9d9',
-                                                width: 30,
-                                                height: 30
-                                            }}
-                                            onClick={() => handleColorChange(detail.color)}
-                                        />
-                                    </Tooltip>
-                                ))}
-                            </Space>
-                        </div>
-
-                        {/* Size Selection */}
-                        <div>
-                            <Text strong>Size: </Text>
-                            <Radio.Group
-                                onChange={(e) => setSelectedSize(e.target.value)}
-                                value={selectedSize}
-                            >
-                                {Object.keys(selectedSizes).map((size) => (
-                                    <Radio.Button
-                                        key={size}
-                                        value={size}
-                                        disabled={selectedSizes[size] === 0}
-                                    >
-                                        {size} ({selectedSizes[size]})
-                                    </Radio.Button>
-                                ))}
-                            </Radio.Group>
-                        </div>
-
 
                         {/* Selection Alert */}
-                        {(!selectedSize || !selectedColor) && (
-                            <Alert
-                                message="Please select both size and color before adding to cart"
-                                type="warning"
-                                showIcon
-                            />
+                        {product.details && product.details.length > 0 ? (
+                            <>
+                                {/* Color Selection */}
+                                <div>
+                                    <Text strong>Color: </Text>
+                                    <Space>
+                                        {product.details.map((detail) => (
+                                            <Tooltip title={detail.color} key={detail.color}>
+                                                <Button
+                                                    shape="circle"
+                                                    style={{
+                                                        backgroundColor: COLOR_MAP[detail.color] || detail.color,
+                                                        border: selectedColor === detail.color
+                                                            ? '3px solid #1890ff'
+                                                            : '1px solid #d9d9d9',
+                                                        width: 30,
+                                                        height: 30
+                                                    }}
+                                                    onClick={() => handleColorChange(detail.color)}
+                                                />
+                                            </Tooltip>
+                                        ))}
+                                    </Space>
+                                </div>
+
+                                {/* Size Selection */}
+                                <div>
+                                    <Text strong>Size: </Text>
+                                    <Radio.Group
+                                        onChange={(e) => setSelectedSize(e.target.value)}
+                                        value={selectedSize}
+                                    >
+                                        {Object.keys(selectedSizes).map((size) => (
+                                            <Radio.Button
+                                                key={size}
+                                                value={size}
+                                                disabled={selectedSizes[size] === 0}
+                                            >
+                                                {size} ({selectedSizes[size]})
+                                            </Radio.Button>
+                                        ))}
+                                    </Radio.Group>
+                                </div>
+
+
+                                {(!selectedSize || !selectedColor) && (
+                                    <Alert
+                                        message="Please select both size and color before adding to cart"
+                                        type="warning"
+                                        showIcon
+                                    />
+                                )}
+
+                                <Space>
+                                    {product.offers && (
+                                        <Tag icon={<TagOutlined/>} color="red">
+                                            Special Offers Available
+                                        </Tag>
+                                    )}
+                                    {product.exclusive && (
+                                        <Tag icon={<TagOutlined/>} color="blue">
+                                            Exclusive
+                                        </Tag>
+                                    )}
+                                    <Tag icon={<StarFilled/>} color="gold">
+                                        {product.category}
+                                    </Tag>
+                                </Space>
+
+
+                            </>
+                        ) : (
+                            <Text type="danger" strong>
+                                Out of Stock
+                            </Text>
                         )}
 
+
                         {/* Additional Product Information */}
-                        <Space>
-                            {product.offers && (
-                                <Tag icon={<TagOutlined />} color="red">
-                                    Special Offers Available
-                                </Tag>
-                            )}
-                            {product.exclusive && (
-                                <Tag icon={<TagOutlined />} color="blue">
-                                    Exclusive
-                                </Tag>
-                            )}
-                            <Tag icon={<StarFilled />} color="gold">
-                                {product.category}
-                            </Tag>
-                        </Space>
+                        {/*<Space>*/}
+                        {/*    {product.offers && (*/}
+                        {/*        <Tag icon={<TagOutlined />} color="red">*/}
+                        {/*            Special Offers Available*/}
+                        {/*        </Tag>*/}
+                        {/*    )}*/}
+                        {/*    {product.exclusive && (*/}
+                        {/*        <Tag icon={<TagOutlined />} color="blue">*/}
+                        {/*            Exclusive*/}
+                        {/*        </Tag>*/}
+                        {/*    )}*/}
+                        {/*    <Tag icon={<StarFilled />} color="gold">*/}
+                        {/*        {product.category}*/}
+                        {/*    </Tag>*/}
+                        {/*</Space>*/}
                     </Space>
                 </Col>
             </Row>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, message, Divider } from 'antd';
+import {Button, message, Divider, notification} from 'antd';
 import {
     ShoppingCartOutlined,
     DeleteOutlined,
@@ -18,12 +18,21 @@ const Cart: React.FC<CartProps> = ({ closeCartDrawer }) => {
 
     const placeOrder = () => {
         if (items.length === 0) {
-            message.warning('Your cart is empty. Add items before placing an order.');
+            notification.warning({
+                message: 'Cart is Empty',
+                description: 'Your cart is empty. Add items before placing an order.',
+                placement: 'topRight', // You can change placement to other positions like 'topLeft', 'bottomRight', etc.
+            });
             return;
         }
 
-        console.log('Order placed:', items);
-        message.success('Order placed successfully!');
+        notification.success({
+            message: 'Order Placed Successfully',
+            description: 'Your order has been placed successfully.',
+            placement: 'topRight',
+        });
+
+        // Remove items from cart
         items.forEach((item) => removeItem(item.product.productId, item.selectedSize, item.selectedColor));
         closeCartDrawer();
     };
