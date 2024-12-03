@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from './components/Navbar';
-import Preloader from './components/Preloader';
-import HeroSection from './components/HeroSection';
-import ExclusiveCollection from './components/ExclusiveCollection';
-import SpecialOffers from './components/SpecialOffers';
-import Categories from './components/Categories';
-import Newsletter from './components/Newsletter';
-import Footer from './components/Footer';
+import Navbar from './components/sections/Navbar';
+import Preloader from './components/preloader/Preloader';
+import HeroSection from './components/sections/HeroSection';
+import ExclusiveCollection from './components/sections/ExclusiveCollection';
+import SpecialOffers from './components/sections/SpecialOffers';
+import AllCollection from './components/sections/AllCollection';
+import Newsletter from './components/sections/Newsletter';
+import Footer from './components/sections/Footer';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets/css/styles.css';
-import Cart from "./components/Cart";
+import './index.css';
+import Cart from "./components/cart/Cart";
+import {Product} from "./types/ProductInterfaces";
 // import ProductCard from "./components/ProductCard";
 
 const App: React.FC = () => {
@@ -26,17 +27,20 @@ const App: React.FC = () => {
     const startTime = Date.now(); // Record the start time
 
     const fetchProducts = async () => {
+      const startTime = Date.now(); // Start time to calculate elapsed time
       try {
         const response = await fetch(
-            "https://script.google.com/macros/s/AKfycbzpfRoPvlcMNXVlnHdxuZzepeJ__v5qbemAX6O8uJBnLngnipJ_F_3KmZZ6crDAutQI/exec" // Replace with your API URL
+            'https://script.google.com/macros/s/AKfycbyBvIXBKYHWJuQy1jrP02JYMlkUjU-RYAyLagpcghhNcZCJ46BDzCvtHNuZ_tvzizEN/exec' // Replace with your API URL
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch products");
+          throw new Error('Failed to fetch products');
         }
-        const data = await response.json(); // Parse JSON response
-        setExclusiveItems(data.filter((item: any) => item.exclusive === true));
-        setOfferItems(data.filter((item: any) => item.offers === true));
-        setAllItems(data.filter((item: any) => item.offers === false));
+        const data: Product[] = await response.json(); // Parse JSON response with type safety
+
+        // Filter the data into respective categories
+        setExclusiveItems(data.filter((item) => item.exclusive));
+        setOfferItems(data.filter((item) => item.offers));
+        setAllItems(data);
       } catch (error: any) {
         setError(error.message); // Handle error
       } finally {
@@ -47,7 +51,6 @@ const App: React.FC = () => {
         setTimeout(() => setLoading(false), remainingTime);
       }
     };
-
     fetchProducts(); // Call the fetch function
 
     // Initialize AOS
@@ -67,9 +70,9 @@ const App: React.FC = () => {
         <main>
           <HeroSection />
           <ExclusiveCollection items={exclusiveItems} />
-          <SpecialOffers />
-          <Categories />
-          <Newsletter />
+          <SpecialOffers items={offerItems} />
+          <AllCollection items={allItems} />
+          {/*<Newsletter />*/}
         </main>
         <Footer />
       </>
