@@ -1,4 +1,3 @@
-// components/Preloader.tsx
 import React from 'react';
 
 const Preloader: React.FC = () => {

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import img from "../../assets/images/shop/product-10.jpg"
 import {ShoppingCartOutlined} from "@ant-design/icons";
 import {useCart} from "../cart/CartContext";
-import {Badge, Button, Card, Typography} from "antd";
+import {Badge, Button, Card, Empty, Typography} from "antd";
 import ProductDetailsPopup from "../popups/ProductDetailsPopup";
 import ProductCard from "../cards/ProductCard";
 import {Product} from "../../types/ProductInterfaces";
@@ -45,9 +45,15 @@ const SpecialOffers: React.FC<OffersCollectionProps> = ({ items }) => {
             <div className="container">
                 <h1 className="text-center mb-5" data-aos="fade-up">Special Offers</h1>
                 {items.length === 0 ? (
-                    <div className="text-center py-8">
-                        <p className="text-gray-500 text-lg">No offers available at the moment.</p>
-                    </div>
+                        <div className="flex justify-center items-center w-full h-full p-6 mt-5 mb-5">
+                            <Empty
+                                description={
+                                    <span className="text-gray-500">
+                                      No offers available at the moment.
+                                    </span>
+                                }
+                            />
+                        </div>
                 ) : (
                     <>
                         <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">

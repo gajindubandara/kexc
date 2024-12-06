@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useCart } from "../cart/CartContext";
 import ProductDetailsPopup from "../popups/ProductDetailsPopup";
-import { Button, Typography } from 'antd';
+import {Button, Empty, Typography} from 'antd';
 import { Product } from "../../types/ProductInterfaces";
 import ProductCard from "../cards/ProductCard";
 
@@ -46,9 +46,15 @@ const ExclusiveCollection: React.FC<ExclusiveCollectionProps> = ({ items }) => {
             <div className="container">
                     <h1 className="text-center mb-5" data-aos="fade-up">Exclusive Collection</h1>
                 {items.length === 0 ? (
-                    <div className="text-center py-8">
-                        <p className="text-gray-500 text-lg">No exclusive items available at the moment.</p>
-                    </div>
+                        <div className="flex justify-center items-center w-full h-full p-6 mt-5 mb-5">
+                            <Empty
+                                description={
+                                    <span className="text-gray-500">
+                                      No exclusive items available at the moment.
+                                    </span>
+                                }
+                            />
+                        </div>
                 ) : (
                     <>
                         <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
