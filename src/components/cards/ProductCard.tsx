@@ -1,17 +1,31 @@
-import React from 'react';
-import {Card, Button, Badge, Typography} from 'antd';
-import {ShoppingCartOutlined} from '@ant-design/icons';
-import {Product} from "../../types/ProductInterfaces";
+import React, { useState, useEffect } from 'react';
+import { Card, Button, Badge, Typography, Space, Tooltip, Skeleton } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
+import { Product } from "../../types/ProductInterfaces";
 
-const {Meta} = Card;
-const {Text} = Typography;
+const { Meta } = Card;
+const { Text } = Typography;
 
 interface ProductCardProps {
     product: Product;
-    onCardClick: (product: Product) => void; // Added prop to handle card click
+    onCardClick: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({product, onCardClick}) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onCardClick }) => {
+    const isStockEmpty = !product.details || product.details.length === 0 || product.details.every(detail => detail.total === 0);
+
+    const COLOR_MAP: { [key: string]: string } = {
+        'Floral': '#FFD700',
+        'Green': '#2ecc71',
+        'Blue': '#3498db',
+        'Red': '#e74c3c',
+        'Black': '#000000',
+        'White': '#ffffff',
+        'Gray': '#95a5a6',
+        'Pink': '#ff69b4',
+        'Purple': '#9b59b6'
+    };
+
     return (
         <div className="col" key={product.productId} data-aos="fade-up">
             <Badge.Ribbon
@@ -23,25 +37,14 @@ const ProductCard: React.FC<ProductCardProps> = ({product, onCardClick}) => {
                     zIndex: 10,
                 }}
             >
-                {/*{product.details && product.details.length === 0 && (*/}
-                {/*    <Badge.Ribbon*/}
-                {/*        placement="end"*/}
-                {/*        style={{*/}
-                {/*            zIndex: 10,*/}
-                {/*        }}*/}
-                {/*        color="red"*/}
-                {/*        text="Out of Stock"*/}
-                {/*    />*/}
-                {/*)}*/}
-
                 <Card
                     hoverable
-                    onClick={() => onCardClick(product)} // Trigger onCardClick when the card is clicked
-                    style={{minHeight: '440px'}} // Ensure the card has a minimum height
+                    onClick={() => onCardClick(product)}
+                    style={{ minHeight: '440px' }}
                     cover={
                         <div
                             style={{
-                                height: '300px', // Fixed height for the image section
+                                height: '300px',
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -54,14 +57,14 @@ const ProductCard: React.FC<ProductCardProps> = ({product, onCardClick}) => {
                                 style={{
                                     width: '100%',
                                     height: '100%',
-                                    objectPosition: 'center', // Centers the image within the container
+                                    objectPosition: 'center',
                                 }}
                             />
                             {product.details.length >= 1
                                 ? <Button
                                     type="primary"
                                     shape="circle"
-                                    icon={<ShoppingCartOutlined/>}
+                                    icon={<ShoppingCartOutlined />}
                                     style={{
                                         position: 'absolute',
                                         top: 10,
@@ -84,7 +87,7 @@ const ProductCard: React.FC<ProductCardProps> = ({product, onCardClick}) => {
                                             strong
                                             delete
                                             type="secondary"
-                                            style={{marginRight: '8px'}}
+                                            style={{ marginRight: '8px' }}
                                         >
                                             {new Intl.NumberFormat('en-LK', {
                                                 style: 'currency',
@@ -106,49 +109,39 @@ const ProductCard: React.FC<ProductCardProps> = ({product, onCardClick}) => {
                                         }).format(product.price)}
                                     </Text>
                                 )}
-                                <br/>
-
-                                <Text type={product.details?.length > 0 ? "secondary" : "danger"} strong={product.details?.length === 0}>
-                                    {product.details?.length > 0
-                                        ? `${product.details.length} ${product.details.length > 1 ? "Colors" : "Color"}`
-                                        : "Out of Stock"
-                                    }
-                                </Text>
-                                <br/>
+                                <br />
                                 <Text type="secondary" ellipsis>
                                     {product.description}
                                 </Text>
-
-                                {/*{product.details && product.details.length > 0 ? (*/}
-                                {/*    <>*/}
-
-                                {/*        <Text type="secondary">*/}
-                                {/*            {product.details.length > 1*/}
-                                {/*                ? `${product.details.length} Colors`*/}
-                                {/*                : `${product.details.length} Color`}*/}
-                                {/*        </Text>*/}
-                                {/*        <br/>*/}
-                                {/*        <Text type="secondary" ellipsis>*/}
-                                {/*            {product.description}*/}
-                                {/*        </Text>*/}
-                                {/*    </>*/}
-                                {/*) : (*/}
-                                {/*    <>*/}
-                                {/*        <Text type="danger" strong>*/}
-                                {/*            Out of Stock*/}
-                                {/*        </Text>*/}
-                                {/*        <br/>*/}
-                                {/*        <Text type="secondary" ellipsis>*/}
-                                {/*            {product.description}*/}
-                                {/*        </Text>*/}
-                                {/*    </>*/}
-                                {/*)}*/}
-
+                                <br />
+                                {!isStockEmpty
+                                    ? (
+                                        <Space>
+                                            {product.details.map((detail) => (
+                                                <Tooltip title={detail.color} key={detail.color}>
+                                                    <div
+                                                        style={{
+                                                            backgroundColor: COLOR_MAP[detail.color] || detail.color,
+                                                            width: 10,
+                                                            height: 10,
+                                                            borderRadius: '50%',
+                                                            display: 'inline-block',
+                                                            border: 'gray 1px solid'
+                                                        }}
+                                                    />
+                                                </Tooltip>
+                                            ))}
+                                        </Space>
+                                    ) : (
+                                        <Text type="danger">
+                                            <strong>Out of Stock</strong>
+                                        </Text>
+                                    )
+                                }
                             </>
                         }
                     />
                 </Card>
-
             </Badge.Ribbon>
         </div>
     );

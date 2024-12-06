@@ -5,7 +5,7 @@ const Preloader: React.FC = () => {
         <div className="preloader" id="preloader">
             <div className="ken-logo">KEN EXCLUSIVE</div>
             {/*<div className="animated-line"></div>*/}
-            <div className="loading-indicator"></div>
+            {/*<div className="loading-indicator"></div>*/}
         </div>
     );
 };

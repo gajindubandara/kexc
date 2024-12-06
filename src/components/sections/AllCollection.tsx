@@ -1,66 +1,81 @@
-import React, {useEffect, useState} from 'react';
-import {Divider, Empty, Radio, Select, Slider, Typography} from "antd";
-import ProductDetailsPopup from "../popups/ProductDetailsPopup";
+import React, { useState, useEffect } from 'react';
+import { Typography, Select, Slider, Divider, Empty } from 'antd';
 import ProductCard from "../cards/ProductCard";
-import {Product} from "../../types/ProductInterfaces";
+import ProductDetailsPopup from "../popups/ProductDetailsPopup"; // Ensure this import exists
+import { Product } from "../../types/ProductInterfaces";
+import SkeletonSection from "../preloader/SkeletonSection";
 
-const {Text} = Typography;
-const {Option} = Select;
+const { Text } = Typography;
+const { Option } = Select;
 
 interface AllCollectionProps {
-    items: Product[]; // Replace `any` with a specific type if your items have a known structure
+    items: Product[];
+    dataReceived: boolean;
 }
 
-const AllCollection: React.FC<AllCollectionProps> = ({items}) => {
-    const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
+const AllCollection: React.FC<AllCollectionProps> = ({ items, dataReceived }) => {
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [showAll, setShowAll] = useState(false);
-    const uniqueCategories = [...new Set(items.map(item => item.category))];
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
+    // Safely get unique categories with fallback
+    const uniqueCategories = items ? [...new Set(items.map(item => item.category || 'Uncategorized'))] : [];
+
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [filteredItems, setFilteredItems] = useState<Product[]>([]);
+
+    // Improved price range calculation with null/undefined checks
     const getPriceRange = (products: Product[]): [number, number] => {
-        if (products.length === 0) {
-            return [0, 0]; // Default range if no products
+        if (!products || products.length === 0) {
+            return [0, 1000]; // Default range if no products
         }
 
-        let minPrice = Infinity;
-        let maxPrice = -Infinity;
+        const validPrices = products
+            .map(product => product.offers ? product.disPrice : product.price)
+            .filter(price => price != null && !isNaN(price));
 
-        products.forEach(product => {
-            const price = product.offers ? product.disPrice : product.price; // Consider discount price if available
-            if (price < minPrice) minPrice = price;
-            if (price > maxPrice) maxPrice = price;
-        });
+        if (validPrices.length === 0) {
+            return [0, 1000];
+        }
 
-        return [minPrice, maxPrice];
+        return [
+            Math.floor(Math.min(...validPrices)),
+            Math.ceil(Math.max(...validPrices))
+        ];
     };
-    const [priceRange, setPriceRange] = useState<[number, number]>(() => getPriceRange(items));
 
+    // Initialize price range state with a safe default
+    const [priceRange, setPriceRange] = useState<[number, number]>(() =>
+        getPriceRange(items || [])
+    );
 
+    // Handlers
     const handleCategoryChange = (value: string[]) => {
         setSelectedCategories(value);
     };
 
-    // Filter items based on selected categories and price range
-    const filteredItems = items.filter((item) => {
-        const price = item.offers ? item.disPrice! : item.price;
+    const onChange = (newRange: number[]) => {
+        setPriceRange([newRange[0], newRange[1]]);
+    };
 
-        // Check category filter (if any categories are selected)
-        const matchesCategory =
-            selectedCategories.length === 0 || selectedCategories.includes(item.category);
+    const filterItems = () => {
+        const filtered = items.filter((item) => {
+            const price = item.offers && item.disPrice !== undefined
+                ? item.disPrice
+                : (item.price || 0);
+            const matchesCategory =
+                selectedCategories.length === 0 ||
+                selectedCategories.includes(item.category || 'Uncategorized');
 
-        // Check price range filter
-        const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
+            const matchesPrice =
+                price >= priceRange[0] &&
+                price <= priceRange[1];
 
-        return matchesCategory && matchesPrice;
-    });
+            return matchesCategory && matchesPrice;
+        });
+        setFilteredItems(filtered);
+    };
 
-    // Slice the filtered items into sets of 8 based on showAll
-    const displayedItems = showAll ? filteredItems : filteredItems.slice(0, 8);
-
-    // Check if there are more items to display
-    const hasMoreItems = filteredItems.length > 8;
-
-    const handleViewDetails = (product: any) => {
+    const handleViewDetails = (product: Product) => {
         setSelectedProduct(product);
     };
 
@@ -68,22 +83,43 @@ const AllCollection: React.FC<AllCollectionProps> = ({items}) => {
         setSelectedProduct(null);
     };
 
-
     const handleToggleView = () => {
-        if (showAll) {
-            // When showing less, scroll to the exclusive section
-            const collectionSection = document.getElementById('collection');
-            if (collectionSection) {
-                collectionSection.scrollIntoView({ behavior: 'smooth' });
+        setShowAll(prevShowAll => !prevShowAll);
+    };
+
+    // Effect for filtering items
+    useEffect(() => {
+        if (dataReceived && items && items.length > 0) {
+            filterItems();
+        }
+    }, [dataReceived, items, selectedCategories,priceRange]);
+
+
+    useEffect(() => {
+        if (dataReceived && items && items.length > 0) {
+            const [min, max] = getPriceRange(items);
+
+            // Only update if the calculated range is different from current range
+            if (min !== priceRange[0] || max !== priceRange[1]) {
+                setPriceRange([min, max]);
             }
         }
-        setShowAll(!showAll);
-    };
+    }, [dataReceived, items]);
 
-    const onChange = (newRange: number[]) => {
-        // Ensure the range is updated correctly
-        setPriceRange([newRange[0], newRange[1]]);
-    };
+    // Loading state
+    if (!dataReceived || !items) {
+        return (
+            <section className="py-5 white-section" id="collection">
+                <div className="container">
+                    <h1 className="text-center mb-5" data-aos="fade-up">Our Collection</h1>
+                    <SkeletonSection numberOfCards={4} />
+                </div>
+            </section>
+        );
+    }
+
+    const displayedItems = showAll ? filteredItems : filteredItems.slice(0, 8);
+    const hasMoreItems = filteredItems.length > 8;
 
     return (
         <section className="py-5 white-section" id="collection">
@@ -98,7 +134,7 @@ const AllCollection: React.FC<AllCollectionProps> = ({items}) => {
                                     <h6 className="mb-2">Categories</h6>
                                     <Select
                                         mode="multiple"
-                                        style={{width: '100%'}}
+                                        style={{ width: '100%' }}
                                         placeholder="Filter by Category"
                                         value={selectedCategories}
                                         onChange={handleCategoryChange}
@@ -111,7 +147,7 @@ const AllCollection: React.FC<AllCollectionProps> = ({items}) => {
                                     </Select>
                                 </div>
 
-                                {/*Price Range */}
+                                {/* Price Range */}
                                 <div className="col-md-6 mb-3">
                                     <h6 className="mb-2">Price Range</h6>
 
@@ -121,7 +157,7 @@ const AllCollection: React.FC<AllCollectionProps> = ({items}) => {
                                         max={getPriceRange(items)[1]} // Maximum price from the products
                                         value={priceRange} // Current price range
                                         onChange={onChange} // Update state when slider changes
-                                        style={{marginBottom: "0px"}}
+                                        style={{ marginBottom: "0px" }}
                                     />
                                     <Text type="secondary" ellipsis>
                                         {`${new Intl.NumberFormat('en-LK', {
@@ -139,14 +175,14 @@ const AllCollection: React.FC<AllCollectionProps> = ({items}) => {
                         </div>
                     </div>
                 </div>
-                <Divider/>
+                <Divider />
                 <div className="row">
-                    {displayedItems.length === 0 ? (
+                    {filteredItems.length === 0 ? (
                         <div className="flex justify-center items-center w-full h-full p-6 mt-5 mb-5">
                             <Empty
                                 description={
                                     <span className="text-gray-500">
-                                      No products available at the moment
+                                        No products available at the moment
                                     </span>
                                 }
                             />

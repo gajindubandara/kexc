@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
-import { useCart } from "../cart/CartContext";
+import React, {useState} from 'react';
+import {useCart} from "../cart/CartContext";
 import ProductDetailsPopup from "../popups/ProductDetailsPopup";
 import {Button, Empty, Typography} from 'antd';
-import { Product } from "../../types/ProductInterfaces";
+import {Product} from "../../types/ProductInterfaces";
 import ProductCard from "../cards/ProductCard";
+import SkeletonSection from "../preloader/SkeletonSection";
 
-const { Title } = Typography;
+const {Title} = Typography;
 
 interface ExclusiveCollectionProps {
-    items: Product[]; // Replace `any` with a specific type if your items have a known structure
+    items: Product[];
+    dataReceived: boolean;
 }
 
-const ExclusiveCollection: React.FC<ExclusiveCollectionProps> = ({ items }) => {
+const ExclusiveCollection: React.FC<ExclusiveCollectionProps> = ({items, dataReceived}) => {
     const [showAll, setShowAll] = useState(false); // State to toggle between showing more or fewer products
     const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
 
@@ -24,7 +26,7 @@ const ExclusiveCollection: React.FC<ExclusiveCollectionProps> = ({ items }) => {
             // When showing less, scroll to the exclusive section
             const exclusiveSection = document.getElementById('exclusive');
             if (exclusiveSection) {
-                exclusiveSection.scrollIntoView({ behavior: 'smooth' });
+                exclusiveSection.scrollIntoView({behavior: 'smooth'});
             }
         }
         setShowAll(!showAll);
@@ -40,20 +42,30 @@ const ExclusiveCollection: React.FC<ExclusiveCollectionProps> = ({ items }) => {
         setSelectedProduct(null); // Close the popup
     };
 
+    if (!dataReceived) {
+        return (
+            <section className="py-5 white-section" id="exclusive">
+                <div className="container">
+                    <h1 className="text-center mb-5" data-aos="fade-up">Exclusive Collection</h1>
+                    <SkeletonSection numberOfCards={4}/>
+                </div>
+            </section>
+        );
+    }
     return (
         <section className="py-5 white-section" id="exclusive">
             <div className="container">
-                    <h1 className="text-center mb-5" data-aos="fade-up">Exclusive Collection</h1>
+                <h1 className="text-center mb-5" data-aos="fade-up">Exclusive Collection</h1>
                 {items.length === 0 ? (
-                        <div className="flex justify-center items-center w-full h-full p-6 mt-5 mb-5">
-                            <Empty
-                                description={
-                                    <span className="text-gray-500">
+                    <div className="flex justify-center items-center w-full h-full p-6 mt-5 mb-5">
+                        <Empty
+                            description={
+                                <span className="text-gray-500">
                                       No exclusive items available at the moment.
                                     </span>
-                                }
-                            />
-                        </div>
+                            }
+                        />
+                    </div>
                 ) : (
                     <>
                         <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
@@ -61,7 +73,8 @@ const ExclusiveCollection: React.FC<ExclusiveCollectionProps> = ({ items }) => {
                                 <ProductCard
                                     key={product.productId}
                                     product={product}
-                                    onCardClick={() => handleViewDetails(product)} // Open the product details on click
+                                    onCardClick={() => handleViewDetails(product)}
+
                                 />
                             ))}
                         </div>

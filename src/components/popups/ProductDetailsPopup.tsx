@@ -29,6 +29,7 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
     const [selectedColor, setSelectedColor] = useState<string | null>(null);
     const [selectedSizes, setSelectedSizes] = useState<any>({});
     const {addItem} = useCart();
+    const isStockEmpty = !product.details || product.details.length === 0 || product.details.every(detail => detail.total === 0);
 
     useEffect(() => {
         // Set initial selected color and size
@@ -66,12 +67,6 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
         onClose(); // Close the popup or modal
         message.success('Item added to your cart!'); // Show a success message
     };
-
-    // const handleAddToCart = () => {
-    //     addItem({ ...cartItem, quantity: 1 });
-    //     onClose();
-    //     message.success('Item added to your cart!');
-    // };
 
     const handleColorChange = (color: string) => {
         setSelectedColor(color);
@@ -163,7 +158,7 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
 
 
                         {/* Selection Alert */}
-                        {product.details && product.details.length > 0 ? (
+                        {!isStockEmpty ? (
                             <>
                                 {/* Color Selection */}
                                 <div>

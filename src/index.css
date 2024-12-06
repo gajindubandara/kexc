@@ -44,7 +44,7 @@ body {
 /* Desktop styles (min-width: 992px matches Bootstrap's lg breakpoint) */
 @media (max-width: 992px) {
     .navbar {
-        background: #1f1917;
+        background: #000000;
     }
 }
 
@@ -55,7 +55,7 @@ body {
     }
 
     .navbar.scrolled {
-        background: rgba(31, 25, 23, 0.95);
+        background: rgba(0, 0, 0, 0.95);
         backdrop-filter: blur(10px);
         padding: 20px 0 10px 0;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -305,33 +305,33 @@ p {
     }
 }
 
-.loading-indicator {
-    width: 60px;
-    height: 60px;
-    border: 3px solid transparent;
-    border-top: 3px solid white;
-    border-right: 3px solid white;
-    border-radius: 50%;
-    animation: spin 1.5s linear infinite, pulseWhite 2s infinite;
-}
+/*.loading-indicator {*/
+/*    width: 60px;*/
+/*    height: 60px;*/
+/*    border: 3px solid transparent;*/
+/*    border-top: 3px solid white;*/
+/*    border-right: 3px solid white;*/
+/*    border-radius: 50%;*/
+/*    animation: spin 1.5s linear infinite, pulseWhite 2s infinite;*/
+/*}*/
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
+/*@keyframes spin {*/
+/*    0% {*/
+/*        transform: rotate(0deg);*/
+/*    }*/
+/*    100% {*/
+/*        transform: rotate(360deg);*/
+/*    }*/
+/*}*/
 
-@keyframes pulseWhite {
-    0%, 100% {
-        opacity: 0.5;
-    }
-    50% {
-        opacity: 1;
-    }
-}
+/*@keyframes pulseWhite {*/
+/*    0%, 100% {*/
+/*        opacity: 0.5;*/
+/*    }*/
+/*    50% {*/
+/*        opacity: 1;*/
+/*    }*/
+/*}*/
 
 /* Custom styles for the radio buttons */
 /*.custom-radio-group .ant-radio-button-checked {*/
@@ -372,3 +372,17 @@ p {
 .ant-slider .ant-slider-handle::after{
     box-shadow: 0 0 0 2px #000000;
 }
+
+
+/*card*/
+.ant-card .ant-card-body{
+    padding: 5px 24px !important;
+}
+
+/*font*/
+#footer .ant-typography{
+    font-family: 'OPTIBodoni-Antiqua', serif !important;
+}
+/*.ant-card{*/
+/*    font-family: 'OPTIBodoni-Antiqua', serif !important;*/
+/*}*/

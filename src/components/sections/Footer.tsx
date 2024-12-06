@@ -11,13 +11,11 @@ const { Title, Text, Link } = Typography;
 
 const Footer: React.FC = () => {
     return (
-        <footer style={{
-            // backgroundColor: '#001529',
-            // color: 'white',
+        <footer id="footer" style={{
             padding: '30px 24px'
         }}
         className="black-section">
-            <Row gutter={[24, 24]} justify="space-between">
+            <Row gutter={[24, 24]} justify="space-between" style={{ fontFamily: "'OPTIBodoni-Antiqua', serif !important"}}>
                 {/* Company Info */}
                 <Col xs={24} sm={12} md={6}>
                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>

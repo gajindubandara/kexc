@@ -6,13 +6,15 @@ import {Badge, Button, Card, Empty, Typography} from "antd";
 import ProductDetailsPopup from "../popups/ProductDetailsPopup";
 import ProductCard from "../cards/ProductCard";
 import {Product} from "../../types/ProductInterfaces";
+import SkeletonSection from "../preloader/SkeletonSection";
 const { Text } = Typography;
 
 interface OffersCollectionProps {
-    items: Product[]; // Replace `any` with a specific type if your items have a known structure
+    items: Product[];
+    dataReceived: boolean;
 }
 
-const SpecialOffers: React.FC<OffersCollectionProps> = ({ items }) => {
+const SpecialOffers: React.FC<OffersCollectionProps> = ({ items,dataReceived }) => {
     const [showAll, setShowAll] = useState(false);
     const { addItem } = useCart();
     const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
@@ -40,6 +42,17 @@ const SpecialOffers: React.FC<OffersCollectionProps> = ({ items }) => {
         setSelectedProduct(null);
     };
 
+    if (!dataReceived) {
+        return (
+            <section className="py-5 black-section" id="offers">
+                <div className="container">
+                    <h1 className="text-center mb-5" data-aos="fade-up">Special Offers</h1>
+                    <SkeletonSection numberOfCards={4}/>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section className="py-5 black-section" id="offers">
             <div className="container">
@@ -62,7 +75,7 @@ const SpecialOffers: React.FC<OffersCollectionProps> = ({ items }) => {
                                 <ProductCard
                                     key={product.productId}
                                     product={product}
-                                    onCardClick={() => handleViewDetails(product)} // Open the product details on click
+                                    onCardClick={() => handleViewDetails(product)}
                                 />
                             ))}
                         </div>
