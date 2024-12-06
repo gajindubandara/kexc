@@ -361,3 +361,14 @@ p {
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
     color: white !important;
 }
+
+
+
+/*slider*/
+.ant-slider-horizontal .ant-slider-track{
+    background-color: #000000 !important;
+}
+
+.ant-slider .ant-slider-handle::after{
+    box-shadow: 0 0 0 2px #000000;
+}

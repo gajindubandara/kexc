@@ -13,7 +13,6 @@ interface ExclusiveCollectionProps {
 
 const ExclusiveCollection: React.FC<ExclusiveCollectionProps> = ({ items }) => {
     const [showAll, setShowAll] = useState(false); // State to toggle between showing more or fewer products
-    const { addItem } = useCart();
     const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
 
     // Only show the first 4 items or all items depending on showAll state

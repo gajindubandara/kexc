@@ -106,7 +106,7 @@ const Navbar: React.FC = () => {
                                 <a className="nav-link" href="#home" onClick={closeMobileMenu}>Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#categories" onClick={closeMobileMenu}>Shop</a>
+                                <a className="nav-link" href="#collection" onClick={closeMobileMenu}>Shop</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#exclusive" onClick={closeMobileMenu}>Exclusive</a>
