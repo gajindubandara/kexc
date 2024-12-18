@@ -6,6 +6,7 @@ import {
     TwitterOutlined,
     LinkedinOutlined
 } from '@ant-design/icons';
+import logo from '../../assets/images/logo/full-logo_white.png';
 
 const { Title, Text, Link } = Typography;
 
@@ -20,13 +21,13 @@ const Footer: React.FC = () => {
                 <Col xs={24} sm={12} md={6}>
                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
                         <img
-                            src="https://shop.raceya.fit/wp-content/uploads/2020/11/logo-placeholder.jpg"
+                            src={logo}
                             alt="Ken Exclusive Logo"
-                            style={{ height: '48px', marginRight: '16px' }}
+                            style={{ height: '60px', marginRight: '16px' }}
                         />
-                        <Title level={4} style={{ color: 'white', margin: 0 }}>
-                            Ken Exclusive
-                        </Title>
+                        {/*<Title level={4} style={{ color: 'white', margin: 0 }}>*/}
+                        {/*    Ken Exclusive*/}
+                        {/*</Title>*/}
                     </div>
                     <Text style={{ color: 'rgba(255, 255, 255, 0.75)' }}>
                         Premium Fashion & Luxury Clothing Brand dedicated to delivering

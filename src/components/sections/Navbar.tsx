@@ -3,6 +3,7 @@ import { Avatar, Badge, Button, Drawer, message, Space } from "antd";
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import Cart from '../cart/Cart';
 import { useCart } from "../cart/CartContext"; // Import the Cart component
+import logo from '../../assets/images/logo/full-logo_white.png';
 
 const Navbar: React.FC = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -72,9 +73,15 @@ const Navbar: React.FC = () => {
         <>
             <nav className={`navbar navbar-expand-lg fixed-top ${isScrolled ? 'scrolled' : 'transparent'}`} ref={navRef}>
                 <div className="container">
-                    <a className="navbar-brand fw-bold" href="#">Ken Exclusive</a>
+                        <img
+                            src={logo}
+                            alt="Ken Exclusive Logo"
+                            style={{height: '44px', marginRight: '16px'}}
+                        />
+                    {/*<a className="navbar-brand fw-bold" href="#">Ken Exclusive</a>*/}
                     <div className="nav-container">
-                        <li className="nav-item cart-icon-wrapper" style={{ listStyleType: "none" }} id="mobile-view-cart">
+                        <li className="nav-item cart-icon-wrapper" style={{listStyleType: "none"}}
+                            id="mobile-view-cart">
                             <Space size="middle">
                                 <Badge
                                     size="small"
@@ -84,9 +91,9 @@ const Navbar: React.FC = () => {
                                     <Avatar
                                         shape="square"
                                         onClick={showCartDrawer}
-                                        style={{ cursor: 'pointer', background: 'transparent' }}
+                                        style={{cursor: 'pointer', background: 'transparent'}}
                                         size="large"
-                                        icon={<ShoppingCartOutlined />}
+                                        icon={<ShoppingCartOutlined/>}
                                     />
                                 </Badge>
                             </Space>
@@ -124,9 +131,9 @@ const Navbar: React.FC = () => {
                                         <Avatar
                                             shape="square"
                                             onClick={showCartDrawer}
-                                            style={{ cursor: 'pointer', background: 'transparent' }}
+                                            style={{cursor: 'pointer', background: 'transparent'}}
                                             size="large"
-                                            icon={<ShoppingCartOutlined />}
+                                            icon={<ShoppingCartOutlined/>}
                                         />
                                     </Badge>
                                 </Space>
@@ -137,7 +144,7 @@ const Navbar: React.FC = () => {
             </nav>
             <Drawer
                 title={
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                         <span>Your Cart</span>
                         {items.length !== 0 ? (
                             <Button
