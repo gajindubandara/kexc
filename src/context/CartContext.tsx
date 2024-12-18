@@ -13,7 +13,7 @@ interface CartContextType {
     items: CartItem[];
     addItem: (item: CartItem) => void;
     removeItem: (productId: string, selectedSize: string, selectedColor: string) => void;
-    updateQuantity: (id: string, quantity: number) => void;
+    updateQuantity: (id: string, quantity: number, selectedSize: string, selectedColor: string) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -49,10 +49,14 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         );
     };
 
-    const updateQuantity = (id: string, quantity: number) => {
+    const updateQuantity = (id: string, quantity: number, selectedSize: string, selectedColor: string) => {
         setItems((prevItems) =>
             prevItems.map((item) =>
-                item.product.productId === id ? { ...item, quantity } : item
+                item.product.productId === id &&
+                item.selectedSize === selectedSize &&
+                item.selectedColor === selectedColor
+                    ? { ...item, quantity }
+                    : item
             )
         );
     };

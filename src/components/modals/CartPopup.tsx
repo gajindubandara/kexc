@@ -124,8 +124,11 @@ const CartPopup: React.FC<CartProps> = ({ onClose, visible }) => {
                                             onChange={(value) =>
                                                 updateQuantity(
                                                     item.product.productId,
-                                                    value || 1
+                                                    value || 1,
+                                                    item.selectedSize,
+                                                    item.selectedColor
                                                 )
+
                                             }
                                             style={{ width: 70 }}
                                         />
