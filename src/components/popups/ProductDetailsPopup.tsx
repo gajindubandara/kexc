@@ -73,13 +73,16 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
             onCancel={onClose}
             width={800}
             footer={[
-                <Button key="back" onClick={onClose}>Cancel</Button>,
+                <Button key="back" onClick={onClose} className="cancel-button">
+                    Cancel
+                </Button>,
                 <Button
                     key="submit"
                     type="primary"
-                    icon={<ShoppingCartOutlined/>}
+                    icon={<ShoppingCartOutlined />}
                     onClick={handleAddToCart}
                     disabled={!selectedSize || !selectedColor}
+                    className="add-to-cart-button"
                 >
                     Add to Cart
                 </Button>
@@ -224,24 +227,6 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
                                 Out of Stock
                             </Text>
                         )}
-
-
-                        {/* Additional Product Information */}
-                        {/*<Space>*/}
-                        {/*    {product.offers && (*/}
-                        {/*        <Tag icon={<TagOutlined />} color="red">*/}
-                        {/*            Special Offers Available*/}
-                        {/*        </Tag>*/}
-                        {/*    )}*/}
-                        {/*    {product.exclusive && (*/}
-                        {/*        <Tag icon={<TagOutlined />} color="blue">*/}
-                        {/*            Exclusive*/}
-                        {/*        </Tag>*/}
-                        {/*    )}*/}
-                        {/*    <Tag icon={<StarFilled />} color="gold">*/}
-                        {/*        {product.category}*/}
-                        {/*    </Tag>*/}
-                        {/*</Space>*/}
                     </Space>
                 </Col>
             </Row>

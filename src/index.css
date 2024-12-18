@@ -386,3 +386,26 @@ p {
 /*.ant-card{*/
 /*    font-family: 'OPTIBodoni-Antiqua', serif !important;*/
 /*}*/
+
+
+.cancel-button {
+    color: #000 !important; /* Black text */
+    border: 1px solid #000 !important; /* Black border */
+}
+.cancel-button:hover {
+    color: #fff !important; /* White text */
+    background-color: #000 !important; /* Black background */
+    border-color: #000 !important; /* Black border */
+}
+
+.add-to-cart-button {
+    background-color: black !important;
+    border-color: black !important;
+    color: white !important;
+}
+
+.add-to-cart-button:hover {
+    background-color: #333 !important; /* Darker black */
+    border-color: #333 !important;
+    color: white !important;
+}
