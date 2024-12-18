@@ -1,4 +1,4 @@
-import {Product} from "../../types/ProductInterfaces";
+import {Product} from "../types/ProductInterfaces";
 
 export const fetchProducts = async (): Promise<Product[]> => {
     try {

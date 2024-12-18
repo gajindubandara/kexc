@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import Cart from "./components/cart/Cart";
 import {Product} from "./types/ProductInterfaces";
-import {fetchProducts} from "./components/services/ productService";
+import {fetchProducts} from "./services/productService";
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
