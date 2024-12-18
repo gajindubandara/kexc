@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Button, Badge, Typography, Space, Tooltip, Skeleton } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { Product } from "../../types/ProductInterfaces";
+import {COLOR_MAP} from "../../utils/constants";
 
 const { Meta } = Card;
 const { Text } = Typography;
@@ -14,17 +15,17 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, onCardClick }) => {
     const isStockEmpty = !product.details || product.details.length === 0 || product.details.every(detail => detail.total === 0);
 
-    const COLOR_MAP: { [key: string]: string } = {
-        'Floral': '#FFD700',
-        'Green': '#2ecc71',
-        'Blue': '#3498db',
-        'Red': '#e74c3c',
-        'Black': '#000000',
-        'White': '#ffffff',
-        'Gray': '#95a5a6',
-        'Pink': '#ff69b4',
-        'Purple': '#9b59b6'
-    };
+    // const COLOR_MAP: { [key: string]: string } = {
+    //     'Floral': '#FFD700',
+    //     'Green': '#2ecc71',
+    //     'Blue': '#3498db',
+    //     'Red': '#e74c3c',
+    //     'Black': '#000000',
+    //     'White': '#ffffff',
+    //     'Gray': '#95a5a6',
+    //     'Pink': '#ff69b4',
+    //     'Purple': '#9b59b6'
+    // };
 
     return (
         <div className="col" key={product.productId} data-aos="fade-up">

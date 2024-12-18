@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Modal, Row, Col, Typography, Badge, Button, Space, Tag, Radio, Alert, Tooltip, message} from 'antd';
 import {ShoppingCartOutlined, StarFilled, TagOutlined} from '@ant-design/icons';
 import {useCart} from "../cart/CartContext";
-import {Product} from "../../types/ProductInterfaces"; // Import your Product interface
+import {Product} from "../../types/ProductInterfaces";
+import {COLOR_MAP} from "../../utils/constants"; // Import your Product interface
 
 const {Title, Text, Paragraph} = Typography;
 
@@ -12,17 +13,6 @@ interface ProductDetailsPopupProps {
     onClose: () => void;
 }
 
-const COLOR_MAP: { [key: string]: string } = {
-    'Floral': '#FFD700',
-    'Green': '#2ecc71',
-    'Blue': '#3498db',
-    'Red': '#e74c3c',
-    'Black': '#000000',
-    'White': '#ffffff',
-    'Gray': '#95a5a6',
-    'Pink': '#ff69b4',
-    'Purple': '#9b59b6'
-};
 
 const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visible, onClose}) => {
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
