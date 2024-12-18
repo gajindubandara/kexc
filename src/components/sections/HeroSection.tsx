@@ -13,7 +13,7 @@ const HeroSection: React.FC = () => {
                             Explore our exclusive collection of premium clothing and accessories.
                         </p>
                         <div data-aos="fade-up" data-aos-delay="200">
-                            <a href="#categories" className="btn btn-dark btn-lg">
+                            <a href="#collection" className="btn btn-dark btn-lg">
                                 Shop Now
                             </a>
                         </div>
