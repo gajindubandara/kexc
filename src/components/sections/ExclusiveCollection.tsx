@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useCart} from "../cart/CartContext";
-import ProductDetailsPopup from "../popups/ProductDetailsPopup";
+import ProductDetailsPopup from "../modals/ProductDetailsPopup";
 import {Button, Empty, Typography} from 'antd';
 import {Product} from "../../types/ProductInterfaces";
 import ProductCard from "../cards/ProductCard";

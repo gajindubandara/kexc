@@ -11,7 +11,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import Cart from "./components/cart/Cart";
+import CartPopup from "./components/modals/CartPopup";
 import {Product} from "./types/ProductInterfaces";
 import {fetchProducts} from "./services/productService";
 

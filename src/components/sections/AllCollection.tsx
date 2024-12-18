@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Select, Slider, Divider, Empty } from 'antd';
 import ProductCard from "../cards/ProductCard";
-import ProductDetailsPopup from "../popups/ProductDetailsPopup"; // Ensure this import exists
+import ProductDetailsPopup from "../modals/ProductDetailsPopup"; // Ensure this import exists
 import { Product } from "../../types/ProductInterfaces";
 import SkeletonSection from "../preloader/SkeletonSection";
 

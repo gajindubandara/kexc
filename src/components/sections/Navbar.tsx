@@ -1,17 +1,18 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Avatar, Badge, Button, Drawer, message, Space } from "antd";
+import { Avatar, Badge, Button, Drawer, message, Modal, Space } from "antd";
 import { ShoppingCartOutlined } from '@ant-design/icons';
-import Cart from '../cart/Cart';
+import CartPopup from '../modals/CartPopup';
 import { useCart } from "../cart/CartContext"; // Import the Cart component
 import logo from '../../assets/images/logo/full-logo_white.png';
+import OrderConfirmationPopup from "../modals/OrderConfirmationPopup";
 
 const Navbar: React.FC = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isNavExpanded, setIsNavExpanded] = useState(false);
     const { items, removeItem } = useCart();
-    const [isCartDrawerVisible, setIsCartDrawerVisible] = useState(false);
 
     const navRef = useRef<HTMLDivElement>(null); // Reference for the nav container
+    const [isOrderModalVisible, setIsOrderModalVisible] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -32,14 +33,14 @@ const Navbar: React.FC = () => {
         };
     }, []);
 
-    const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
+    const cartItemCount = items.length;
 
-    const showCartDrawer = () => {
-        setIsCartDrawerVisible(true);
+    const showCartModal = () => {
+        setIsOrderModalVisible(true);
     };
 
-    const closeCartDrawer = () => {
-        setIsCartDrawerVisible(false);
+    const closeCartModal = () => {
+        setIsOrderModalVisible(false);
     };
 
     const clearCart = () => {
@@ -47,7 +48,7 @@ const Navbar: React.FC = () => {
             removeItem(item.product.productId, item.selectedSize, item.selectedColor)
         );
         message.success('Cart cleared!');
-        closeCartDrawer();
+        closeCartModal();
     };
 
     // Function to close the mobile menu after clicking on a nav item
@@ -90,7 +91,7 @@ const Navbar: React.FC = () => {
                                 >
                                     <Avatar
                                         shape="square"
-                                        onClick={showCartDrawer}
+                                        onClick={showCartModal}
                                         style={{cursor: 'pointer', background: 'transparent'}}
                                         size="large"
                                         icon={<ShoppingCartOutlined/>}
@@ -130,7 +131,7 @@ const Navbar: React.FC = () => {
                                     >
                                         <Avatar
                                             shape="square"
-                                            onClick={showCartDrawer}
+                                            onClick={showCartModal}
                                             style={{cursor: 'pointer', background: 'transparent'}}
                                             size="large"
                                             icon={<ShoppingCartOutlined/>}
@@ -142,29 +143,10 @@ const Navbar: React.FC = () => {
                     </div>
                 </div>
             </nav>
-            <Drawer
-                title={
-                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                        <span>Your Cart</span>
-                        {items.length !== 0 ? (
-                            <Button
-                                color="danger"
-                                variant="link"
-                                onClick={clearCart}
-                                size="small"
-                                style={{ padding: '0 8px' }}
-                            >
-                                Clear Cart
-                            </Button>
-                        ) : null}
-                    </div>
-                }
-                placement="right"
-                onClose={closeCartDrawer}
-                visible={isCartDrawerVisible}
-            >
-                <Cart closeCartDrawer={closeCartDrawer} />
-            </Drawer>
+            <CartPopup
+                visible={isOrderModalVisible}
+                onClose={() => setIsOrderModalVisible(false)}
+            />
         </>
     );
 };

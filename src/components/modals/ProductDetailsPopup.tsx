@@ -1,5 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {Modal, Row, Col, Typography, Badge, Button, Space, Tag, Radio, Alert, Tooltip, message} from 'antd';
+import {
+    Modal,
+    Row,
+    Col,
+    Typography,
+    Badge,
+    Button,
+    Space,
+    Tag,
+    Radio,
+    Alert,
+    Tooltip,
+    message,
+    InputNumber
+} from 'antd';
 import {ShoppingCartOutlined, StarFilled, TagOutlined} from '@ant-design/icons';
 import {useCart} from "../cart/CartContext";
 import {Product} from "../../types/ProductInterfaces";
@@ -20,6 +34,7 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
     const [selectedSizes, setSelectedSizes] = useState<any>({});
     const {addItem} = useCart();
     const isStockEmpty = !product.details || product.details.length === 0 || product.details.every(detail => detail.total === 0);
+    const [quantity, setQuantity] = useState<number>(1);
 
     useEffect(() => {
         // Set initial selected color and size
@@ -29,12 +44,6 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
             setSelectedSize('S'); // Set default size to 'S'
         }
     }, [product.details]);
-
-    const cartItem = {
-        product: product,
-        selectedSize: selectedSize,
-        selectedColor: selectedColor
-    };
 
     const handleAddToCart = () => {
         const finalSize = selectedSize || 'none';
@@ -50,7 +59,7 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
             },
             selectedSize: finalSize,
             selectedColor: finalColor,
-            quantity: 1,
+            quantity: quantity,
         };
 
         addItem(cartItem); // Add the item to the cart
@@ -67,6 +76,15 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
         }
     };
 
+    const handleSizeChange = (size: string) => {
+        setSelectedSize(size);
+        setQuantity(1); // Reset quantity when size changes
+    };
+
+    const maxQuantity = selectedColor && selectedSize
+        ? selectedSizes[selectedSize]
+        : 0;
+
     return (
         <Modal
             open={visible}
@@ -82,7 +100,7 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
                     icon={<ShoppingCartOutlined />}
                     onClick={handleAddToCart}
                     disabled={!selectedSize || !selectedColor}
-                    className="add-to-cart-button"
+                    className="custom-primary-button"
                 >
                     Add to Cart
                 </Button>
@@ -180,7 +198,7 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
                                 <div>
                                     <Text strong>Size: </Text>
                                     <Radio.Group
-                                        onChange={(e) => setSelectedSize(e.target.value)}
+                                        onChange={(e) => handleSizeChange(e.target.value)}
                                         value={selectedSize}
                                     >
                                         {Object.keys(selectedSizes).map((size) => (
@@ -193,6 +211,21 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
                                             </Radio.Button>
                                         ))}
                                     </Radio.Group>
+                                </div>
+
+                                {/* Quantity Selector */}
+                                <div style={{marginTop: 16}}>
+                                    <Text strong>Quantity: </Text>
+                                    <InputNumber
+                                        min={1}
+                                        max={maxQuantity}
+                                        value={quantity}
+                                        onChange={(value) => setQuantity(value || 1)}
+                                        style={{width: 100}}
+                                    />
+                                    <Text type="secondary" style={{marginLeft: 8}}>
+                                        {maxQuantity} available in stock
+                                    </Text>
                                 </div>
 
 

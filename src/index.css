@@ -398,14 +398,21 @@ p {
     border-color: #000 !important; /* Black border */
 }
 
-.add-to-cart-button {
+.custom-primary-button {
     background-color: black !important;
     border-color: black !important;
     color: white !important;
 }
 
-.add-to-cart-button:hover {
+.custom-primary-button:hover {
     background-color: #333 !important; /* Darker black */
     border-color: #333 !important;
     color: white !important;
+}
+
+.custom-primary-button[disabled] {
+    border-color: #d9d9d9 !important; /* Light gray border */
+    color: rgba(0, 0, 0, 0.25) !important; /* Light gray text */
+    background: rgba(0, 0, 0, 0.04) !important;
+    box-shadow: none !important;
 }

@@ -3,7 +3,7 @@ import img from "../../assets/images/shop/product-10.jpg"
 import {ShoppingCartOutlined} from "@ant-design/icons";
 import {useCart} from "../cart/CartContext";
 import {Badge, Button, Card, Empty, Typography} from "antd";
-import ProductDetailsPopup from "../popups/ProductDetailsPopup";
+import ProductDetailsPopup from "../modals/ProductDetailsPopup";
 import ProductCard from "../cards/ProductCard";
 import {Product} from "../../types/ProductInterfaces";
 import SkeletonSection from "../preloader/SkeletonSection";
