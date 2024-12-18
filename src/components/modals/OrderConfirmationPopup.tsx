@@ -9,7 +9,7 @@ import {
     Space,
     notification
 } from 'antd';
-import {useCart} from "../context/CartContext";
+import {useCart} from "../../context/CartContext";
 
 const { Text, Title } = Typography;
 

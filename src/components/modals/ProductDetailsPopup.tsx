@@ -15,7 +15,7 @@ import {
     InputNumber
 } from 'antd';
 import {ShoppingCartOutlined, StarFilled, TagOutlined} from '@ant-design/icons';
-import {useCart} from "../context/CartContext";
+import {useCart} from "../../context/CartContext";
 import {Product} from "../../types/ProductInterfaces";
 import {COLOR_MAP} from "../../utils/constants"; // Import your Product interface
 

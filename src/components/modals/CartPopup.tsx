@@ -16,7 +16,7 @@ import {
     DeleteOutlined,
     ClearOutlined
 } from '@ant-design/icons';
-import {useCart} from "../context/CartContext";
+import {useCart} from "../../context/CartContext";
 import OrderConfirmationPopup from "./OrderConfirmationPopup";
 
 const { Title, Text } = Typography;

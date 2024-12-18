@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useCart} from "../context/CartContext";
+import {useCart} from "../../context/CartContext";
 import ProductDetailsPopup from "../modals/ProductDetailsPopup";
 import {Button, Empty, Typography} from 'antd';
 import {Product} from "../../types/ProductInterfaces";

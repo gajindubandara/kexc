@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Avatar, Badge, Button, Drawer, message, Modal, Space } from "antd";
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import CartPopup from '../modals/CartPopup';
-import { useCart } from "../context/CartContext"; // Import the Cart component
+import { useCart } from "../../context/CartContext"; // Import the Cart component
 import logo from '../../assets/images/logo/full-logo_white.png';
 import OrderConfirmationPopup from "../modals/OrderConfirmationPopup";
 

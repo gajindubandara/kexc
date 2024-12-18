@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import img from "../../assets/images/shop/product-10.jpg"
 import {ShoppingCartOutlined} from "@ant-design/icons";
-import {useCart} from "../context/CartContext";
+import {useCart} from "../../context/CartContext";
 import {Badge, Button, Card, Empty, Typography} from "antd";
 import ProductDetailsPopup from "../modals/ProductDetailsPopup";
 import ProductCard from "../cards/ProductCard";
