@@ -16,7 +16,7 @@ import {
     DeleteOutlined,
     ClearOutlined
 } from '@ant-design/icons';
-import {useCart} from "../cart/CartContext";
+import {useCart} from "../context/CartContext";
 import OrderConfirmationPopup from "./OrderConfirmationPopup";
 
 const { Title, Text } = Typography;
@@ -39,7 +39,7 @@ const CartPopup: React.FC<CartProps> = ({ onClose, visible }) => {
         if (items.length === 0) {
             Modal.warning({
                 title: 'Cart is Empty',
-                content: 'Please add items to your cart before placing an order.',
+                content: 'Please add items to your context before placing an order.',
             });
             return;
         }
@@ -211,7 +211,7 @@ export default CartPopup;
 //     PlusOutlined,
 //     MinusOutlined
 // } from '@ant-design/icons';
-// import {useCart} from '../cart/CartContext';
+// import {useCart} from '../context/CartContext';
 // import OrderConfirmationPopup from "./OrderConfirmationPopup";
 //
 // interface CartProps {
@@ -229,7 +229,7 @@ export default CartPopup;
 //         if (items.length === 0) {
 //             notification.warning({
 //                 message: 'Cart is Empty',
-//                 description: 'Your cart is empty. Add items before placing an order.',
+//                 description: 'Your context is empty. Add items before placing an order.',
 //                 placement: 'topRight', // You can change placement to other positions like 'topLeft', 'bottomRight', etc.
 //             });
 //             return;
@@ -242,7 +242,7 @@ export default CartPopup;
 //         //     placement: 'topRight',
 //         // });
 //
-//         // Remove items from cart
+//         // Remove items from context
 //         // items.forEach((item) => removeItem(item.product.productId, item.selectedSize, item.selectedColor));
 //         onClose();
 //     };
@@ -256,7 +256,7 @@ export default CartPopup;
 //         // Process the order (you can add more logic here)
 //         console.log('Order Details:', orderDetails);
 //
-//         // Clear cart and close drawer
+//         // Clear context and close drawer
 //         items.forEach((item) => removeItem(item.product.productId, item.selectedSize, item.selectedColor));
 //         onClose();
 //     };
@@ -286,7 +286,7 @@ export default CartPopup;
 //                     {items.length === 0 ? (
 //                         <div className="text-center py-16 px-4">
 //                             <ShoppingCartOutlined className="text-7xl text-gray-300 mb-4"/>
-//                             <p className="text-gray-500 text-lg">Your cart is empty</p>
+//                             <p className="text-gray-500 text-lg">Your context is empty</p>
 //                             <p className="text-gray-400 text-sm">Explore our products and add some items</p>
 //                         </div>
 //                     ) : (

@@ -15,7 +15,7 @@ import {
     InputNumber
 } from 'antd';
 import {ShoppingCartOutlined, StarFilled, TagOutlined} from '@ant-design/icons';
-import {useCart} from "../cart/CartContext";
+import {useCart} from "../context/CartContext";
 import {Product} from "../../types/ProductInterfaces";
 import {COLOR_MAP} from "../../utils/constants"; // Import your Product interface
 
@@ -62,9 +62,9 @@ const ProductDetailsPopup: React.FC<ProductDetailsPopupProps> = ({product, visib
             quantity: quantity,
         };
 
-        addItem(cartItem); // Add the item to the cart
+        addItem(cartItem); // Add the item to the context
         onClose(); // Close the popup or modal
-        message.success('Item added to your cart!'); // Show a success message
+        message.success('Item added to your context!'); // Show a success message
     };
 
     const handleColorChange = (color: string) => {

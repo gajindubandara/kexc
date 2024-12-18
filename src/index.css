@@ -121,14 +121,14 @@ body {
 /*    !*transform: translateY(-10px);*!*/
 /*}*/
 
-/*.cart-button:hover {*/
+/*.context-button:hover {*/
 /*    background-color: #2d2d2d;  !* Change to the desired color *!*/
 /*    color: #f0f0f0;  !* Change the text color *!*/
 /*    transform: scale(1.05); !* Slightly increase the size on hover *!*/
 /*    transition: all 0.3s ease;  !* Smooth transition *!*/
 /*}*/
 
-/*.cart-button{*/
+/*.context-button{*/
 /*    top: 10px;*/
 /*    right: 10px;*/
 /*    z-index: 10;*/

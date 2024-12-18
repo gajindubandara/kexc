@@ -9,7 +9,7 @@ import {
     Space,
     notification
 } from 'antd';
-import {useCart} from "../cart/CartContext";
+import {useCart} from "../context/CartContext";
 
 const { Text, Title } = Typography;
 
@@ -27,7 +27,7 @@ const OrderConfirmationPopup: React.FC<OrderConfirmationPopup> = ({
     const { items } = useCart();
     const [form] = Form.useForm();
     const [isFormValid, setIsFormValid] = useState(false);
-    // Columns for cart items table
+    // Columns for context items table
     const columns = [
         {
             title: 'Product',
@@ -86,7 +86,7 @@ const OrderConfirmationPopup: React.FC<OrderConfirmationPopup> = ({
     const handleOrderConfirmation = () => {
         form.validateFields()
             .then(values => {
-                // Combine form values with cart items
+                // Combine form values with context items
                 const orderDetails = {
                     ...values,
                     items: items,
